@@ -6,14 +6,14 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/08/19 09:18:34 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/08/30 01:41:23 by mbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .DEFAULT_GOAL	= all
 
-MAND_SRCS	=	main.c philo.c initialize.c print_info.c errors.c utils.c \
-				time.c nbrstr.c memory.c
+MAND_SRCS	=	main.c philo.c initialize.c display.c utils.c \
+				time.c memory.c parsing.c actions.c mutex.c
 MAND_SRCDIR	=	mandatory/src
 MAND_PATH	=	$(addprefix $(MAND_SRCDIR)/, $(MAND_SRCS))
 MAND_OBJDIR	=	mandatory/obj
@@ -42,7 +42,9 @@ NAME_BONUS	=	philo_bonus
 CC			=	gcc
 RM			=	rm -rvf
 MK			=	mkdir -p
-#DEBUG		=	-g3 -fsanitize=address
+#DEBUG		=	-g -fsanitize=address
+#DEBUG		=	-g -fsanitize=thread
+DEBUG		=	-g
 CFLAGS		=	-Wall -Wextra -Werror
 LFLAGS		=	-lpthread
 DFLAGS		=	-MMD -MF

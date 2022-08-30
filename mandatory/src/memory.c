@@ -6,11 +6,11 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 04:12:38 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/08/19 04:34:37 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/08/28 18:01:35 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "philo.h"
+#include "philo.h"
 
 char	*ft_mem_alloc(int n)
 {
@@ -29,15 +29,20 @@ void	ft_bzero(void *s, size_t n)
 		*(char *)s++ = '\0';
 }
 
-void	ft_free_all(t_philo **philo)
+void	ft_free_philo(t_philo *philo)
 {
 	t_philo	*temp;
+	int		nb;
+	int		i;
 
-	while (*philo)
+	i = 0;
+	nb = philo->param->nb_philos;
+	while (++i < nb)
 	{
-		temp = (*philo)->next;
-		free(*philo);
-		*philo = NULL;
-		*philo = temp;
+		temp = philo->next;
+		free(philo);
+		philo = NULL;
+		philo = temp;
 	}
+	free(philo);
 }

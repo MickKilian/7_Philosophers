@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 21:32:01 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/08/19 04:13:07 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/08/29 02:20:03 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ size_t	ft_strlen(const char *str)
 	return (temp);
 }*/
 
-int	ft_atoi(const char *nptr)
+long long	ft_atoi(const char *nptr)
 {
-	int		n;
-	int		sign;
+	long long	n;
+	long long	sign;
 
 	n = 0;
 	sign = 1;
@@ -138,4 +138,33 @@ char	*ft_strdup(const char *s)
 	}
 	*(cpy + i) = '\0';
 	return (cpy);
+}
+
+void	ft_putstr(char *s)
+{
+	if (s == NULL)
+		return ;
+	write(1, s, ft_strlen(s));
+}
+
+void	ft_putnbr(long long n)
+{
+	char	c;
+
+	if (n >= 10)
+		ft_putnbr(n / 10);
+	c = n % 10 + '0';
+	write (1, &c, 1);
+}
+
+void	ft_putnbrn(long long n, int len)
+{
+	char	c;
+
+	if (n >= 10 || len > 1)
+		ft_putnbrn(n / 10, len--);
+	while (len-- > 1)
+		write (1, "0", 1);
+	c = n % 10 + '0';
+	write (1, &c, 1);
 }
