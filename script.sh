@@ -1,4 +1,5 @@
+#!/bin/bash
 for i in {1..50}
 do
-	./philo 5 800 200 200 | grep eating | wc -l
+	./philo 5 601 200 200 3 | grep -A 2 -e enough -e died
 done

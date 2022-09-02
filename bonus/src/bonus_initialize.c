@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 00:45:27 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/09/02 02:36:32 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/09/03 00:49:41 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,20 @@ int	ft_init_param(t_data *param, int argc, char **argv)
 		param->min_eats = ft_atoi(argv[5]);
 	param->need_to_eat_count = param->nb_philos;
 	param->death = -1;
-	pthread_mutex_init(&(param->common_access_mutex), NULL);
+	sem_init(&param->forks_available, 1, param->nb_philos);
 	param->txt_status[0] = "has taken a fork";
 	param->txt_status[1] = "is eating";
 	param->txt_status[2] = "is sleeping";
 	param->txt_status[3] = "is thinking";
 	param->txt_status[4] = "died";
+	sem_unlink("forks");
+	sem_unlink("eat_more");
+	sem_unlink("common_access");
+	sem_unlink("death");
+	forks = sem_open("forks", O_CREAT, 0600, param->nb_philos);
+	eat_more = sem_open("eat_more", O_CREAT, 0600, 1);
+	common_access = sem_open("common_access", O_CREAT, 0600, 1);
+	death = sem_open("death", O_CREAT, 0600, 1);
 	return (0);
 }
 
@@ -58,7 +66,6 @@ t_philo	*ft_new_philo(t_philo *philo, t_data *param, int i)
 	new_philo->tm_eat = param->tm_eat;
 	new_philo->tm_sleep = param->tm_sleep;
 	new_philo->min_eats = param->min_eats;
-	pthread_mutex_init(&(new_philo->fork_mutex), NULL);
 	new_philo->param = param;
 	new_philo->last_eat = 0;
 	new_philo->nb_eats = 0;

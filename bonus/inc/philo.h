@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 21:13:55 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/09/02 03:15:37 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/09/03 00:50:10 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdlib.h>
 # include <pthread.h>
 # include <sys/time.h>
+# include <sempahore.h>
 
 # define ENGH_EAT "END of GAME : All philosophers ate enough"
 # define ERR_ARG1 "ARG 1: number_of_philsophers must be a valid >0 number"
@@ -36,11 +37,12 @@ typedef struct s_data
 	long			tm_eat;
 	long			tm_sleep;
 	int				min_eats;
-	int				need_to_eat_count;
-	pthread_mutex_t	common_access_mutex;
 	long			start;
-	int				death;
 	char			*txt_status[5];
+	sem_t			*forks;
+	sem_t			*eat_more;
+	sem_t			*common_access;
+	sem_t			*death;
 }	t_data;
 
 typedef struct s_philo
@@ -51,8 +53,7 @@ typedef struct s_philo
 	long			tm_sleep;
 	int				min_eats;
 	t_data			*param;
-	pthread_t		thread;
-	pthread_mutex_t	fork_mutex;
+	int				pid;
 	int				status;
 	long			last_eat;
 	int				nb_eats;

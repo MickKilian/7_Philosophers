@@ -6,14 +6,14 @@
 #    By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/07/06 18:34:29 by mbourgeo          #+#    #+#              #
-#    Updated: 2022/08/30 01:41:23 by mbourgeo         ###   ########.fr        #
+#    Updated: 2022/09/02 03:52:56 by mbourgeo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .DEFAULT_GOAL	= all
 
-MAND_SRCS	=	main.c philo.c initialize.c display.c utils.c \
-				time.c memory.c parsing.c actions.c mutex.c
+MAND_SRCS	=	main.c initialize.c utils.c eating.c monitoring.c \
+				time.c memory.c parsing.c actions.c
 MAND_SRCDIR	=	mandatory/src
 MAND_PATH	=	$(addprefix $(MAND_SRCDIR)/, $(MAND_SRCS))
 MAND_OBJDIR	=	mandatory/obj

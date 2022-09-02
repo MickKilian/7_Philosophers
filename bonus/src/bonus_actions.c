@@ -6,7 +6,7 @@
 /*   By: mbourgeo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/26 22:57:03 by mbourgeo          #+#    #+#             */
-/*   Updated: 2022/09/02 03:02:53 by mbourgeo         ###   ########.fr       */
+/*   Updated: 2022/09/03 00:43:19 by mbourgeo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	ft_think(t_philo *philo)
 
 int	ft_changestatus(t_philo *philo, int status)
 {
-	pthread_mutex_lock(&philo->param->common_access_mutex);
+	sem_wait(&philo->param->common_access);
 	philo->status = status;
 	if ((philo->param->death == -1
 			&& philo->param->need_to_eat_count != 0)
@@ -38,11 +38,11 @@ int	ft_changestatus(t_philo *philo, int status)
 	{
 		printf("%ld %d %s\n", ft_gettime(philo->param->start) / 1000,
 			philo->id, philo->param->txt_status[philo->status]);
-		pthread_mutex_unlock(&philo->param->common_access_mutex);
+		sem_post(&philo->param->common_access);
 	}
 	else
 	{
-		pthread_mutex_unlock(&philo->param->common_access_mutex);
+		sem_post(&philo->param->common_access);
 		return (1);
 	}
 	return (0);
